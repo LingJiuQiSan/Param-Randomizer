@@ -28,24 +28,42 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             panel1 = new Panel();
+            weapon_weight = new CheckBox();
             talk = new CheckBox();
             confirm = new Button();
             browse = new Button();
             TextBox = new TextBox();
             openFileDialog1 = new OpenFileDialog();
             seed = new NumericUpDown();
+            weapon_weight_tooltip = new ToolTip(components);
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)seed).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(weapon_weight);
             panel1.Controls.Add(talk);
             panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
             panel1.Size = new Size(307, 368);
             panel1.TabIndex = 0;
+            // 
+            // weapon_weight
+            // 
+            weapon_weight.AutoSize = true;
+            weapon_weight.Checked = true;
+            weapon_weight.CheckState = CheckState.Checked;
+            weapon_weight.Location = new Point(51, 30);
+            weapon_weight.Name = "weapon_weight";
+            weapon_weight.Size = new Size(202, 21);
+            weapon_weight.TabIndex = 2;
+            weapon_weight.Text = "EquipParamWeaapon(Weight)";
+            weapon_weight.UseVisualStyleBackColor = true;
+            weapon_weight.MouseEnter += Weapon_weight_MouseEnter;
+            weapon_weight.MouseLeave += Weapon_weight_MouseLeave;
             // 
             // talk
             // 
@@ -136,5 +154,7 @@
         private TextBox TextBox;
         private OpenFileDialog openFileDialog1;
         private NumericUpDown seed;
+        private CheckBox weapon_weight;
+        private ToolTip weapon_weight_tooltip;
     }
 }
