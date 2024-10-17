@@ -18,7 +18,8 @@ public partial class MainForm : Form
         }
         if (
             talk.Checked == false &&
-            weapon_weight.Checked == false
+            weapon_weight.Checked == false &&
+            weapon_requirement.Checked == false
             )
         {
             MessageBox.Show("No Param Selected!", "Error", MessageBoxButtons.OK);
@@ -42,8 +43,9 @@ public partial class MainForm : Form
 
         BND4 paramBND = SFUtil.DecryptERRegulation(regulationPath);
 
-        if (talk.Checked) paramBND = randtalk(rng, paramBND);
-        if (weapon_weight.Checked) paramBND = rngweaponweight(rng, paramBND);
+        if (talk.Checked) paramBND = randTalk(rng, paramBND);
+        if (weapon_weight.Checked) paramBND = rngWeaponWeight(rng, paramBND);
+        if (weapon_requirement.Checked) paramBND = rngWeaponRequirement(rng, paramBND);
 
         SFUtil.EncryptERRegulation(regulationPath, paramBND);
 
@@ -54,7 +56,60 @@ public partial class MainForm : Form
         MessageBox.Show("All done!", "Randomization Finished", MessageBoxButtons.OK);
     }
 
-    private BND4 rngweaponweight(Random rng, BND4 paramBND)
+    private BND4 rngWeaponRequirement(Random rng, BND4 paramBND)
+    {
+        Dictionary<string, PARAM> paramList = new();
+
+        UpdateConsole("Loading ParamDefs");
+
+        List<PARAMDEF> paramdefs = new List<PARAMDEF>();
+        PARAMDEF paramdef = PARAMDEF.XmlDeserialize($@"{Directory.GetCurrentDirectory()}\Paramdex\EquipParamWeapon.xml");
+        paramdefs.Add(paramdef);
+
+        UpdateConsole("Handling Params");
+
+        foreach (BinderFile file in paramBND.Files)
+        {
+            string name = Path.GetFileNameWithoutExtension(file.Name);
+            var param = PARAM.Read(file.Bytes);
+
+            if (param.ApplyParamdefCarefully(paramdefs))
+                paramList[name] = param;
+        }
+
+        UpdateConsole("Modifying Params");
+
+        PARAM weaponParam = paramList["EquipParamWeapon"];
+
+        for (int i = 0; i < weaponParam.Rows.Count; i++)
+        {
+            PARAM.Row row = weaponParam.Rows[i];
+
+            if ((int)row["sortId"].Value == 9999999)
+            {
+                continue;
+            }
+
+            row["properStrength"].Value = rng.Next(0, 100);
+            row["properAgility"].Value = rng.Next(0, 100);
+            row["properMagic"].Value = rng.Next(0, 100);
+            row["properFaith"].Value = rng.Next(0, 100);
+            row["properLuck"].Value = rng.Next(0, 100);
+        }
+
+        UpdateConsole("Exporting Params");
+
+        foreach (BinderFile file in paramBND.Files)
+        {
+            string name = Path.GetFileNameWithoutExtension(file.Name);
+            if (paramList.ContainsKey(name))
+                file.Bytes = paramList[name].Write();
+        }
+
+        return paramBND;
+    }
+
+    private BND4 rngWeaponWeight(Random rng, BND4 paramBND)
     {
         Dictionary<string, PARAM> paramList = new();
 
@@ -103,7 +158,7 @@ public partial class MainForm : Form
         return paramBND;
     }
 
-    private BND4 randtalk(Random rng, BND4 paramBND)
+    private BND4 randTalk(Random rng, BND4 paramBND)
     {
         Dictionary<string, PARAM> paramList = new();
 
