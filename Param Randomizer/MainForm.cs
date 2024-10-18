@@ -1,9 +1,12 @@
-﻿using SoulsFormats;
+﻿using Param_Randomizer.Settings;
+using SoulsFormats;
 
 namespace Param_Randomizer;
 
 public partial class MainForm : Form
 {
+    private float MaxWeaponWeight = 1000.0F;
+
     public MainForm()
     {
         InitializeComponent();
@@ -143,7 +146,7 @@ public partial class MainForm : Form
                 continue;
             }
 
-            row["weight"].Value = Math.Round(rng.Next(0, 501) / 10.0, 1);
+            row["weight"].Value = rng.Next(0, (int)(MaxWeaponWeight * 10) + 1) / 10.0;
         }
 
         UpdateConsole("Exporting Params");
@@ -269,5 +272,14 @@ public partial class MainForm : Form
     {
         TextBox.Text = text;
         Application.DoEvents();
+    }
+
+    private void WeaponWeightSetting_Click(object sender, EventArgs e)
+    {
+        WeaponWeight weaponWeight = new WeaponWeight();
+        if (weaponWeight.ShowDialog() == DialogResult.OK)
+        {
+            MaxWeaponWeight = weaponWeight.UserInput;
+        }
     }
 }

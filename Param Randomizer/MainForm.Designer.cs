@@ -30,6 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             panel1 = new Panel();
+            WeaponWeightSetting = new Button();
             weapon_requirement = new CheckBox();
             weapon_weight = new CheckBox();
             talk = new CheckBox();
@@ -45,6 +46,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(WeaponWeightSetting);
             panel1.Controls.Add(weapon_requirement);
             panel1.Controls.Add(weapon_weight);
             panel1.Controls.Add(talk);
@@ -52,6 +54,16 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(307, 368);
             panel1.TabIndex = 0;
+            // 
+            // WeaponWeightSetting
+            // 
+            WeaponWeightSetting.Location = new Point(216, 28);
+            WeaponWeightSetting.Name = "WeaponWeightSetting";
+            WeaponWeightSetting.Size = new Size(75, 23);
+            WeaponWeightSetting.TabIndex = 4;
+            WeaponWeightSetting.Text = "Setting";
+            WeaponWeightSetting.UseVisualStyleBackColor = true;
+            WeaponWeightSetting.Click += WeaponWeightSetting_Click;
             // 
             // weapon_requirement
             // 
@@ -68,7 +80,7 @@
             weapon_weight.AutoSize = true;
             weapon_weight.Checked = true;
             weapon_weight.CheckState = CheckState.Checked;
-            weapon_weight.Location = new Point(51, 30);
+            weapon_weight.Location = new Point(15, 30);
             weapon_weight.Name = "weapon_weight";
             weapon_weight.Size = new Size(195, 21);
             weapon_weight.TabIndex = 2;
@@ -169,5 +181,6 @@
         private CheckBox weapon_weight;
         private ToolTip weapon_weight_tooltip;
         private CheckBox weapon_requirement;
+        private Button WeaponWeightSetting;
     }
 }
