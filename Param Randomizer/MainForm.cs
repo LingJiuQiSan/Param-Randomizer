@@ -6,6 +6,7 @@ namespace Param_Randomizer;
 public partial class MainForm : Form
 {
     private float MaxWeaponWeight = 1000.0F;
+    public int[] WeaponRequirement = [99, 99, 99, 99, 99];
 
     public MainForm()
     {
@@ -93,11 +94,11 @@ public partial class MainForm : Form
                 continue;
             }
 
-            row["properStrength"].Value = rng.Next(0, 100);
-            row["properAgility"].Value = rng.Next(0, 100);
-            row["properMagic"].Value = rng.Next(0, 100);
-            row["properFaith"].Value = rng.Next(0, 100);
-            row["properLuck"].Value = rng.Next(0, 100);
+            row["properStrength"].Value = rng.Next(0, WeaponRequirement[0] + 1);
+            row["properAgility"].Value = rng.Next(0, WeaponRequirement[1] + 1);
+            row["properMagic"].Value = rng.Next(0, WeaponRequirement[2] + 1);
+            row["properFaith"].Value = rng.Next(0, WeaponRequirement[3] + 1);
+            row["properLuck"].Value = rng.Next(0, WeaponRequirement[4] + 1);
         }
 
         UpdateConsole("Exporting Params");
@@ -259,15 +260,6 @@ public partial class MainForm : Form
         }
     }
 
-    private void Weapon_weight_MouseEnter(object sender, EventArgs e)
-    {
-        weapon_weight_tooltip.Show("Random Range: 0.0~50.0", weapon_weight, 12, 20);
-    }
-    private void Weapon_weight_MouseLeave(object sender, EventArgs e)
-    {
-        weapon_weight_tooltip.Hide(weapon_weight);
-    }
-
     public void UpdateConsole(string text)
     {
         TextBox.Text = text;
@@ -280,6 +272,15 @@ public partial class MainForm : Form
         if (weaponWeight.ShowDialog() == DialogResult.OK)
         {
             MaxWeaponWeight = weaponWeight.UserInput;
+        }
+    }
+
+    private void WeaponRequirementSetting_Click(object sender, EventArgs e)
+    {
+        WeaponRequirement requirement = new WeaponRequirement();
+        if (requirement.ShowDialog() == DialogResult.OK)
+        {
+            WeaponRequirement = requirement.Requirement;
         }
     }
 }

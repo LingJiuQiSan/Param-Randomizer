@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             panel1 = new Panel();
+            WeaponRequirementSetting = new Button();
             WeaponWeightSetting = new Button();
             weapon_requirement = new CheckBox();
             weapon_weight = new CheckBox();
@@ -39,13 +39,13 @@
             TextBox = new TextBox();
             openFileDialog1 = new OpenFileDialog();
             seed = new NumericUpDown();
-            weapon_weight_tooltip = new ToolTip(components);
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)seed).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(WeaponRequirementSetting);
             panel1.Controls.Add(WeaponWeightSetting);
             panel1.Controls.Add(weapon_requirement);
             panel1.Controls.Add(weapon_weight);
@@ -54,6 +54,16 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(307, 368);
             panel1.TabIndex = 0;
+            // 
+            // WeaponRequirementSetting
+            // 
+            WeaponRequirementSetting.Location = new Point(229, 55);
+            WeaponRequirementSetting.Name = "WeaponRequirementSetting";
+            WeaponRequirementSetting.Size = new Size(75, 23);
+            WeaponRequirementSetting.TabIndex = 5;
+            WeaponRequirementSetting.Text = "Setting";
+            WeaponRequirementSetting.UseVisualStyleBackColor = true;
+            WeaponRequirementSetting.Click += WeaponRequirementSetting_Click;
             // 
             // WeaponWeightSetting
             // 
@@ -68,7 +78,7 @@
             // weapon_requirement
             // 
             weapon_requirement.AutoSize = true;
-            weapon_requirement.Location = new Point(34, 57);
+            weapon_requirement.Location = new Point(3, 57);
             weapon_requirement.Name = "weapon_requirement";
             weapon_requirement.Size = new Size(228, 21);
             weapon_requirement.TabIndex = 3;
@@ -86,8 +96,6 @@
             weapon_weight.TabIndex = 2;
             weapon_weight.Text = "EquipParamWeapon(Weight)";
             weapon_weight.UseVisualStyleBackColor = true;
-            weapon_weight.MouseEnter += Weapon_weight_MouseEnter;
-            weapon_weight.MouseLeave += Weapon_weight_MouseLeave;
             // 
             // talk
             // 
@@ -114,7 +122,6 @@
             // 
             // browse
             // 
-            browse.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             browse.Location = new Point(244, 386);
             browse.Name = "browse";
             browse.Size = new Size(75, 23);
@@ -179,8 +186,8 @@
         private OpenFileDialog openFileDialog1;
         private NumericUpDown seed;
         private CheckBox weapon_weight;
-        private ToolTip weapon_weight_tooltip;
         private CheckBox weapon_requirement;
         private Button WeaponWeightSetting;
+        private Button WeaponRequirementSetting;
     }
 }
